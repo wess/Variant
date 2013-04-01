@@ -15,13 +15,13 @@
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 
-    Variant *v = [Variant variantTestWithName:@"testing"];
-    [v addResponse:^{} forVariant:@"A" withWeight:@20];
-    [v addResponse:^{} forVariant:@"A" withWeight:@40];
-    [v addResponse:^{} forVariant:@"A" withWeight:@10];
-    [v addResponse:^{} forVariant:@"A" withWeight:@30];
+    NSString *test = (NSString *)[Variant variantTestWithA:^{
+        return @"Hello";
+    } B:^{
+        return @"World";
+    }];
     
-    [v execute];
+    NSLog(@"TEST: %@", test);
     
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];

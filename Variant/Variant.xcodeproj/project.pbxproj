@@ -10,6 +10,8 @@
 		081DDE3B17090A4C00C2B726 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 081DDE3A17090A4C00C2B726 /* Foundation.framework */; };
 		081DDE4017090A4C00C2B726 /* Variant.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 081DDE3F17090A4C00C2B726 /* Variant.h */; };
 		081DDE4217090A4C00C2B726 /* Variant.m in Sources */ = {isa = PBXBuildFile; fileRef = 081DDE4117090A4C00C2B726 /* Variant.m */; };
+		08331CC41709E8640007C054 /* VariantObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 08331CC31709E8640007C054 /* VariantObject.m */; };
+		08331CC51709EBF00007C054 /* VariantObject.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 08331CC21709E8640007C054 /* VariantObject.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -19,6 +21,7 @@
 			dstPath = "include/${PRODUCT_NAME}";
 			dstSubfolderSpec = 16;
 			files = (
+				08331CC51709EBF00007C054 /* VariantObject.h in CopyFiles */,
 				081DDE4017090A4C00C2B726 /* Variant.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -31,6 +34,8 @@
 		081DDE3E17090A4C00C2B726 /* Variant-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Variant-Prefix.pch"; sourceTree = "<group>"; };
 		081DDE3F17090A4C00C2B726 /* Variant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Variant.h; sourceTree = "<group>"; };
 		081DDE4117090A4C00C2B726 /* Variant.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Variant.m; sourceTree = "<group>"; };
+		08331CC21709E8640007C054 /* VariantObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VariantObject.h; sourceTree = "<group>"; };
+		08331CC31709E8640007C054 /* VariantObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VariantObject.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +78,7 @@
 		081DDE3C17090A4C00C2B726 /* Variant */ = {
 			isa = PBXGroup;
 			children = (
+				08331CC11709E84C0007C054 /* VariantObject */,
 				081DDE3F17090A4C00C2B726 /* Variant.h */,
 				081DDE4117090A4C00C2B726 /* Variant.m */,
 				081DDE3D17090A4C00C2B726 /* Supporting Files */,
@@ -86,6 +92,15 @@
 				081DDE3E17090A4C00C2B726 /* Variant-Prefix.pch */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		08331CC11709E84C0007C054 /* VariantObject */ = {
+			isa = PBXGroup;
+			children = (
+				08331CC21709E8640007C054 /* VariantObject.h */,
+				08331CC31709E8640007C054 /* VariantObject.m */,
+			);
+			name = VariantObject;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -140,6 +155,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				081DDE4217090A4C00C2B726 /* Variant.m in Sources */,
+				08331CC41709E8640007C054 /* VariantObject.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -242,6 +258,7 @@
 				081DDE4717090A4C00C2B726 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

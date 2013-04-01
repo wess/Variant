@@ -7,16 +7,18 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "VariantObject.h"
+
+typedef id(^VariantResponseBlock)();
 
 @interface Variant : NSObject
 @property (readonly, nonatomic) NSString *name;
 
 + (instancetype)variantTestWithName:(NSString *)name;
-+ (void)variantTestWithA:(void(^)())A B:(void(^)())B;
-
++ (id)variantTestWithA:(id)A B:(id)B;
 - (instancetype)initWithName:(NSString *)name;
-- (void)addResponse:(void(^)())response forVariant:(NSString *)variant;
-- (void)addResponse:(void(^)())response forVariant:(NSString *)variant withWeight:(NSNumber *)weight;
-- (void)removeVariant:(NSString *)variant;
+- (void)addResponse:(id)response forVariant:(NSString *)variant;
+- (void)addResponse:(id)response forVariant:(NSString *)variant withWeight:(NSNumber *)weight;
+- (void)addVariants:(NSArray *)variants;
 - (id)execute;
 @end

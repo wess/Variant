@@ -8,18 +8,6 @@
 
 #import "Variant.h"
 
-/*
- Variant *v = [Variant variantTestWithName:@"shit"];
- [v addResponse:^{} forVariant:@"A"];
- [v addResponse:^{} forVariant:@"B"];
- [v addResponse:^{} forVariant:@"C"];
- [v addResponse:^{} forVariant:@"D"];
- 
- 
- [v execute];
- 
- */
-
 @interface Variant()
 @property (strong, nonatomic) NSMutableArray *variants;
 @end
@@ -34,8 +22,8 @@ static NSInteger selectIndexForVariants(NSArray *variants)
     __block NSInteger weightlessCount   = count;
     __block NSInteger weightLeft        = 100;
     
-    [variants enumerateObjectsUsingBlock:^(NSDictionary *variant, NSUInteger idx, BOOL *stop) {
-        NSInteger weight = [variant[@"weight"] integerValue];
+    [variants enumerateObjectsUsingBlock:^(VariantObject *variant, NSUInteger idx, BOOL *stop) {
+        NSInteger weight = [variant.weight integerValue];
 
         if(weight > 0)
             weightlessCount--;
@@ -60,8 +48,8 @@ static NSInteger selectIndexForVariants(NSArray *variants)
     
     for (int i = 0; i < count; i++)
     {
-        NSDictionary *v = [variants objectAtIndex:i];
-        NSInteger weight = [[v valueForKey:@"weight"] integerValue];
+        VariantObject *object   = [variants objectAtIndex:i];
+        NSInteger weight        = [object.weight integerValue];
 
         currentVal += (weight == 0? (fillWeight / 100.0f) : (weight / 100.0f) );
         
@@ -77,6 +65,18 @@ static NSInteger selectIndexForVariants(NSArray *variants)
     return [[Variant alloc] initWithName:name];
 }
 
++ (id)variantTestWithA:(id)A B:(id)B
+{
+    NSString *name  = @"ABTest";
+    Variant *test   = [Variant variantTestWithName:name];
+
+    [test addResponse:A forVariant:@"A"];
+    [test addResponse:B forVariant:@"B"];
+    
+    return [test execute];
+}
+
+
 - (id)initWithName:(NSString *)name
 {
     self = [super init];
@@ -89,37 +89,38 @@ static NSInteger selectIndexForVariants(NSArray *variants)
     return self;
 }
 
-- (void)addResponse:(void(^)())response forVariant:(NSString *)variant
+- (void)addResponse:(id)response forVariant:(NSString *)variant;
 {
-
-    [self.variants addObject:@{@"name": variant, @"response": [response copy]}];
-
+    [self.variants addObject:[VariantObject variantWithName:variant response:response]];
 }
 
-- (void)addResponse:(void(^)())response forVariant:(NSString *)variant withWeight:(NSNumber *)weight
-{
-    [self.variants addObject:@{@"name": variant, @"response": [response copy], @"weight": weight}];
-}
-
-- (void)removeVariant:(NSString *)variant
+- (void)addResponse:(id)response forVariant:(NSString *)variant withWeight:(NSNumber *)weight
 {
     
+    [self.variants addObject:[VariantObject variantWithName:variant response:response weight:weight]];
 }
 
-+ (void)variantTestWithA:(void(^)())A B:(void(^)())B
+- (void)addVariants:(NSArray *)variants
 {
-    
+    [variants enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        NSAssert([obj isKindOfClass:[VariantObject class]], @"Variant requires all variant options to be VariantObjects");
+        [self.variants addObject:obj];
+    }];
 }
 
 - (id)execute
 {
-    for(NSInteger i = 100; i > 0; i--)
+    NSInteger index = selectIndexForVariants(self.variants);
+    id obj = self.variants[index][@"response"];
+    
+    if([obj isKindOfClass:NSClassFromString(@"NSBlock")])
     {
-        NSInteger index = selectIndexForVariants(self.variants);
-        NSLog(@"I: %d // Index: %d", i, index);
+        VariantResponseBlock block = [obj copy];
+        return block();
     }
     
-    return nil;
+    
+    return obj;
 }
 
 @end
