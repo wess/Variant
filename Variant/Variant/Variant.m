@@ -13,7 +13,6 @@
 @end
 
 @implementation Variant
-@synthesize name = _name;
 
 static NSInteger selectIndexForVariants(NSArray *variants)
 {
@@ -60,15 +59,14 @@ static NSInteger selectIndexForVariants(NSArray *variants)
     return --count;
 }
 
-+ (instancetype)variantTestWithName:(NSString *)name
++ (instancetype)newVariantTest
 {
-    return [[Variant alloc] initWithName:name];
+    return [[Variant alloc] init];
 }
 
 + (id)variantTestWithA:(id)A B:(id)B
 {
-    NSString *name  = @"ABTest";
-    Variant *test   = [Variant variantTestWithName:name];
+    Variant *test   = [Variant newVariantTest];
 
     [test addResponse:A forVariant:@"A"];
     [test addResponse:B forVariant:@"B"];
@@ -77,14 +75,12 @@ static NSInteger selectIndexForVariants(NSArray *variants)
 }
 
 
-- (id)initWithName:(NSString *)name
+- (id)init
 {
     self = [super init];
     if (self)
     {
         self.variants = [[NSMutableArray alloc] init];
-        
-        _name = [name copy];
     }
     return self;
 }
@@ -110,17 +106,13 @@ static NSInteger selectIndexForVariants(NSArray *variants)
 
 - (id)execute
 {
-    NSInteger index = selectIndexForVariants(self.variants);
-    id obj = self.variants[index][@"response"];
+    NSInteger index     = selectIndexForVariants(self.variants);
+    VariantObject *obj  = self.variants[index];
+
+    if([obj.response isKindOfClass:NSClassFromString(@"NSBlock")])
+        return ((VariantResponseBlock)obj.response)();
     
-    if([obj isKindOfClass:NSClassFromString(@"NSBlock")])
-    {
-        VariantResponseBlock block = [obj copy];
-        return block();
-    }
-    
-    
-    return obj;
+    return obj.response;
 }
 
 @end
