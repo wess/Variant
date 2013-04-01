@@ -37,7 +37,7 @@
  @note Weight can be a value between 1 and 100, which represents the percentage of 
  chances for the object to be selected.
  */
-@property (copy, nonatomic) NSNumber    *weight;
+@property (strong, nonatomic) NSNumber    *weight;
 
 /**
  Shortcut method for creating an instance of VariableObject
