@@ -1,5 +1,5 @@
 # Variant
-Variant is a simple library for creating multivariant testing for your Objective-C projects.
+Variant is a simple library for creating multivariate testing for your Objective-C projects.
 
 ## Setup
 To use Variant, just include the Variant project in your project and link against libVariant.a.
