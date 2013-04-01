@@ -29,7 +29,7 @@
  @note Response object can be any valid Objective-C object type, including blocks. 
  If a block is given, the return on that block is the resulting variants response.
  */
-@property (copy, nonatomic) id          response;
+@property (copy, nonatomic) id<NSCopying>          response;
 
 /**
  Weight of a variant when testing.
