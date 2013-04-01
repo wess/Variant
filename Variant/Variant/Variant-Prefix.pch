@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'Variant' target in the 'Variant' project
+//
+
+#ifdef __OBJC__
+    #import <Foundation/Foundation.h>
+#endif
